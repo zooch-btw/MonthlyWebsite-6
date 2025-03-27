@@ -78,7 +78,7 @@ const wordList = [
 //selecting Game Variables
 let selectedWord = '';
 let displayedWord = '';
-let wrongGuess = 0;
+let wrongGuesses = 0;
 let guessedLetters = [];
 const maxMistakes = 6;
 
@@ -129,3 +129,87 @@ function updateDifficultyDisplay(level) {
     //apply the approprite CSS style for chosen difficulty
     difficultyBox.classList.add(level)
 }
+function guessLetter() {
+    let inputField = document.getElementById('LetterInput')
+    let guessedLetter = inputField.value.toLowerCase()
+
+    //Check if input is valid letter (a-z)
+    if (!guessedLetter.match(/^[a-z]$/)) {
+        alert('Please enter a letter')
+        inputField.value = ''
+        return
+    }
+    // Check If letter was akready guessed using .includes()
+    if (guessedLetters.includes(guessedLetter)) {
+        alert(`${guessedLetter} is not in this word. Pick a different letter!`)
+        inputField.value = ''
+        return
+    } else {
+        // add guessed letter to the array of guessedletters
+        guessedLetters.push(guessedLetter)
+    }
+    //Check if letter is in word
+    if (selectedWord.includes(guessedLetter)) {
+        correctGuess(guessedLetter)
+    } else {
+        wrongGuess(guessedLetter)
+    }
+
+
+    function wrongGuess(guessedLetter) {
+        //increment the number of wrong guesses
+        wrongGuesses++
+        // add the guessed letter to HTML div
+        document.getElementById('wrongLetters').textContent += ` ${guessedLetter}`
+
+        document.getElementById('tube').src = `imgs/tube${6 - wrongGuesses}.png`
+
+
+
+        // Check to see if wrongGuesses ===  MaxMistakes if it is, call endgame(false)
+        if (wrongGuesses === maxMistakes) {
+            endGame(false)
+        }
+    }
+
+    function correctGuess(guessedLetter) {
+        let newDisplayedWord = ''
+
+        for (let i = 0; i < selectedWord.length; i++) {
+            if (selectedWord[i] === guessedLetter) {
+                newDisplayedWord += guessedLetter
+            } else {
+                newDisplayedWord += displayedWord[i]
+            }
+        }
+
+        if (!displayedWord.includes('_')) {
+            endGame(true)
+        }
+    }
+
+    function endGame(won) {
+        if (won === true) {
+            setTimeout(() => alert('yeay you won'), 100)
+        } else {
+        }
+    }
+
+    // /Restart Game - Reloads the page to reset everything
+    function restartGame() {
+        location.reload()
+    }
+
+
+
+
+
+
+    // Added event listener to detect "Enter" key press in the input
+
+}
+window.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        guessLetter(); // Calls the guessLetter function when Enter is pressed
+    }
+})

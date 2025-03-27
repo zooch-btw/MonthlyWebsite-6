@@ -1,9 +1,22 @@
 .easy {
     background-color: rgb(41, 233, 41);
+    opacity: 85%;
+    border: 2px solid rgb(0, 0, 0);
 }
 .medium {
     background-color: rgb(231, 231, 22);
+    opacity: 85%;
+    border: 2px solid rgb(0, 0, 0);
+
 }
 .hard {
     background-color: rgb(235, 23, 23);
+    opacity: 85%;
+    border: 2px solid rgb(0, 0, 0);
+
+}
+#ctn2{
+    justify-content: center;
+    align-items: center;
+    margin-top: auto;
 }

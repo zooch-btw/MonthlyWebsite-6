@@ -145,9 +145,7 @@ function guessLetter() {
     }
     // Check If letter was akready guessed using .includes()
     if (guessedLetters.includes(guessedLetter)) {
-        console.log(guessedLetters)
-        console.log(guessedLetter);
-        alert(`${guessedLetter} is already guessed. Pick a different letter!`)
+        endGame(won)
         inputField.value = ''
         return
     } else {
@@ -180,16 +178,6 @@ function wrongGuess(guessedLetter) {
 }
 function correctGuess(guessedLetter) {
     let newDisplayedWord = ''
-    // for (let i = 0; i < selectedWord.length; i++) {
-    //     console.log(i);
-    //     if (selectedWord[i] === guessedLetter) {
-    //         // console.log("here!", guessedLetter);
-    //         // newDisplayedWord += guessedLetter
-    //         slots[i] = guessedLetter;
-    //     } else {
-    //         newDisplayedWord += displayedWord[i]
-    //     }
-    // }
     for (let i = 0; i < selectedWord.length; i++) {
         if (selectedWord[i] == guessedLetter) slots[i] = guessedLetter;
     }
@@ -201,8 +189,9 @@ function correctGuess(guessedLetter) {
 }
 function endGame(won) {
     if (won === true) {
-        setTimeout(() => alert('yeay you won'), 100)
+        setTimeout(() => document.getElementById('VictoryTxt'), 100)
     } else {
+        setTimeout(() => document.getElementById('LossTxt'), 100)
     }
 }
 // /Restart Game - Reloads the page to reset everything
@@ -220,6 +209,7 @@ function restartGame() {
 // Added event listener to detect "Enter" key press in the input
 window.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
-        guessLetter(); // Calls the guessLetter function when Enter is pressed
+        guessLetter();
+        // Calls the guessLetter function when Enter is pressed
     }
 })

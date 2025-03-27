@@ -80,11 +80,15 @@ let selectedWord = '';
 let displayedWord = '';
 let wrongGuesses = 0;
 let guessedLetters = [];
+let slots = [];
 const maxMistakes = 6;
 
 function startGame(level) {
     selectedWord = getRandomWord(level)
-
+    slots = new Array(selectedWord.length);
+    for (let i = 0; i < slots.length; i++) {
+        slots[i] = "_"
+    }
     //Update diff display div
     updateDifficultyDisplay(level)
 
@@ -141,7 +145,9 @@ function guessLetter() {
     }
     // Check If letter was akready guessed using .includes()
     if (guessedLetters.includes(guessedLetter)) {
-        alert(`${guessedLetter} is not in this word. Pick a different letter!`)
+        console.log(guessedLetters)
+        console.log(guessedLetter);
+        alert(`${guessedLetter} is already guessed. Pick a different letter!`)
         inputField.value = ''
         return
     } else {
@@ -151,63 +157,67 @@ function guessLetter() {
     //Check if letter is in word
     if (selectedWord.includes(guessedLetter)) {
         correctGuess(guessedLetter)
-    } else {
-        wrongGuess(guessedLetter)
-    }
-
-
-    function wrongGuess(guessedLetter) {
-        //increment the number of wrong guesses
-        wrongGuesses++
-        // add the guessed letter to HTML div
-        document.getElementById('wrongLetters').textContent += ` ${guessedLetter}`
-
-        document.getElementById('tube').src = `imgs/tube${6 - wrongGuesses}.png`
+    } else wrongGuess(guessedLetter)
 
 
 
-        // Check to see if wrongGuesses ===  MaxMistakes if it is, call endgame(false)
-        if (wrongGuesses === maxMistakes) {
-            endGame(false)
-        }
-    }
-
-    function correctGuess(guessedLetter) {
-        let newDisplayedWord = ''
-
-        for (let i = 0; i < selectedWord.length; i++) {
-            if (selectedWord[i] === guessedLetter) {
-                newDisplayedWord += guessedLetter
-            } else {
-                newDisplayedWord += displayedWord[i]
-            }
-        }
-
-        if (!displayedWord.includes('_')) {
-            endGame(true)
-        }
-    }
-
-    function endGame(won) {
-        if (won === true) {
-            setTimeout(() => alert('yeay you won'), 100)
-        } else {
-        }
-    }
-
-    // /Restart Game - Reloads the page to reset everything
-    function restartGame() {
-        location.reload()
-    }
-
-
-
-
-
-
-    // Added event listener to detect "Enter" key press in the input
 
 }
+function wrongGuess(guessedLetter) {
+    //increment the number of wrong guesses
+    wrongGuesses++
+    // add the guessed letter to HTML div
+    document.getElementById('wrongLetters').textContent += ` ${guessedLetter}`
+
+    document.getElementById('tube').src = `imgs/tube${6 - wrongGuesses}.png`
+
+
+
+    // Check to see if wrongGuesses ===  MaxMistakes if it is, call endgame(false)
+    if (wrongGuesses === maxMistakes) {
+        endGame(false)
+    }
+}
+function correctGuess(guessedLetter) {
+    let newDisplayedWord = ''
+    // for (let i = 0; i < selectedWord.length; i++) {
+    //     console.log(i);
+    //     if (selectedWord[i] === guessedLetter) {
+    //         // console.log("here!", guessedLetter);
+    //         // newDisplayedWord += guessedLetter
+    //         slots[i] = guessedLetter;
+    //     } else {
+    //         newDisplayedWord += displayedWord[i]
+    //     }
+    // }
+    for (let i = 0; i < selectedWord.length; i++) {
+        if (selectedWord[i] == guessedLetter) slots[i] = guessedLetter;
+    }
+    document.getElementById("wordDisplay").textContent = slots.join(" ");
+    if (!slots.includes("_")) {
+        endGame(true)
+    }
+
+}
+function endGame(won) {
+    if (won === true) {
+        setTimeout(() => alert('yeay you won'), 100)
+    } else {
+    }
+}
+// /Restart Game - Reloads the page to reset everything
+function restartGame() {
+    document.getElementById('difficultySelection').classList.remove('d-none')
+
+    document.getElementById('difficultyBox').classList.add('d-none')
+
+    document.getElementById('gameArea').classList.add('d-none')
+
+    document.getElementById('difficultyBox').classList.remove('d-block')
+
+    document.getElementById('gameArea').classList.remove('d-block')
+}
+// Added event listener to detect "Enter" key press in the input
 window.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         guessLetter(); // Calls the guessLetter function when Enter is pressed

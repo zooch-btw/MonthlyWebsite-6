@@ -13,11 +13,14 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="space">
-    <main class="container text-center">
+<body style="background: linear-gradient(to left, #e66465, #9198e5) ">
+    <main class="container-fluid text-center">
         <!--Game Title-->
         <div class="col-12" id="ctn2">
             <div class="row">
+                <h1 id="greeting" class="col-md-4 col-sm-2">Wins: </h1>
+                <div class="col-md-4 col-sm-8"></div>
+                <h1 id="greeting2" class="col-md-4 col-sm-2">Losses: </h1>
                 <h1 class="mb-4">🧪<u>Periodic Table Hangman</u>🧪</h1>
 
                 <!--Difficultly Selection-->
@@ -33,13 +36,11 @@
                 <div class="row justify-content-center">
                     <div class="col-6 text-center">
                         <div id="difficultyBox" class="mt-3 p-3 fw-bold d-none">
-                            <div id="VictoryTxt"> You Win! </div>
-                            <div id="LossTxt"> You Lose!</div>
                         </div>
                     </div>
                 </div>
-
             </div>
+        </div>
         </div>
 
         <!--Game Area-->
@@ -57,9 +58,10 @@
             <!--Wrong Guess List-->
             <p id="wrongLetters" class="fw-bold text=danger">Wrong Guesses: </p>
 
-            <!--Shamrock Health Image-->
-            <img id="tube" src="img/tube6.png" alt="Tube Health" class="img-fluid tube-img">
-
+            <div class="col-12">
+                <!--Shamrock Health Image-->
+                <img id="tube" src="chemimg4.jpg" alt="Tube Health" class="img-fluid tube-img">
+            </div>
             <!--Restart Button-->
             <div class="mt-4"></div>
             <button id="restartBtn" class="btn btn-danger" onclick="restartGame()">🔃Restart Game🔃</button>
@@ -67,6 +69,15 @@
 
 
     </main>
+    <div class="d-flex justify-content-center">
+        <div id="VictoryTxt" class="d-none">
+            <h1>You Win!</h1>
+
+        </div>
+        <div id="LossTxt" class="d-none">
+            <h1>You Lose!</h1>
+        </div>
+    </div>
     <footer>
         <!-- place footer here -->
     </footer>

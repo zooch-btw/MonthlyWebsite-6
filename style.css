@@ -36,6 +36,9 @@ body {
     align-items: center;
     justify-content: center;
 }
-#space {
-    background: linear-gradient(to left, #e66465, #9198e5)
+img {
+    width: 50%;
+    height: 75%;
+    margin: 2%;
+    border: 2px solid rgb(0, 0, 0);
 }

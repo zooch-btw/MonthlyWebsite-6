@@ -82,6 +82,8 @@ let wrongGuesses = 0;
 let guessedLetters = [];
 let slots = [];
 const maxMistakes = 6;
+let wins = 0
+let losses = 0
 
 function startGame(level) {
     selectedWord = getRandomWord(level)
@@ -108,6 +110,10 @@ function startGame(level) {
     document.getElementById('difficultyBox').classList.add('d-block')
 
     document.getElementById('gameArea').classList.add('d-block')
+
+    document.getElementById('greeting').classList.add('d-none')
+
+    document.getElementById('greeting2').classList.add('d-none')
 
 }
 
@@ -157,6 +163,7 @@ function guessLetter() {
         correctGuess(guessedLetter)
     } else wrongGuess(guessedLetter)
 
+    inputField.value = ''
 
 
 
@@ -167,7 +174,7 @@ function wrongGuess(guessedLetter) {
     // add the guessed letter to HTML div
     document.getElementById('wrongLetters').textContent += ` ${guessedLetter}`
 
-    document.getElementById('tube').src = `imgs/tube${6 - wrongGuesses}.png`
+    document.getElementById('tube').src = `imgs/tube${6 - wrongGuesses}.webp`
 
 
 
@@ -188,10 +195,11 @@ function correctGuess(guessedLetter) {
 
 }
 function endGame(won) {
+    console.log(won);
     if (won === true) {
-        setTimeout(() => document.getElementById('VictoryTxt'), 100)
+        setTimeout(() => document.getElementById('VictoryTxt').classList.remove('d-none'), 100, document)
     } else {
-        setTimeout(() => document.getElementById('LossTxt'), 100)
+        setTimeout(() => document.getElementById('LossTxt').classList.remove('d-none'), 100, document)
     }
 }
 // /Restart Game - Reloads the page to reset everything
@@ -205,6 +213,10 @@ function restartGame() {
     document.getElementById('difficultyBox').classList.remove('d-block')
 
     document.getElementById('gameArea').classList.remove('d-block')
+
+    document.getElementById('greeting').classList.remove('d-none')
+
+    document.getElementById('greeting2').classList.remove('d-none')
 }
 // Added event listener to detect "Enter" key press in the input
 window.addEventListener('keypress', function (event) {
@@ -213,3 +225,6 @@ window.addEventListener('keypress', function (event) {
         // Calls the guessLetter function when Enter is pressed
     }
 })
+
+document.getElementById("greeting").innerHTML = `Number of wins: ${wins}`;
+document.getElementById("greeting2").innerHTML = `Number of losses: ${losses}`;

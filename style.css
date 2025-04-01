@@ -1,3 +1,4 @@
+
 html {
     height: 100%;
     width: 100%;
@@ -5,7 +6,10 @@ html {
 body {
     height: 100%;
     width: 100%;
+    background: linear-gradient(to left, #e66465, #9198e5);
+    text-align: center;
 }
+
 .easy {
     background-color: rgb(41, 233, 41);
     opacity: 85%;
@@ -15,19 +19,19 @@ body {
     background-color: rgb(231, 231, 22);
     opacity: 85%;
     border: 2px solid rgb(0, 0, 0);
-
 }
 .hard {
     background-color: rgb(235, 23, 23);
     opacity: 85%;
     border: 2px solid rgb(0, 0, 0);
-
 }
-#ctn2{
+
+#ctn2 {
     justify-content: center;
     align-items: center;
     margin-top: auto;
 }
+
 .container {
     height: 50%;
     width: 100%;
@@ -36,21 +40,53 @@ body {
     align-items: center;
     justify-content: center;
 }
+
 img {
     width: 50%;
     height: 75%;
     margin: 2%;
-    margin-left: 0;
-    margin-right: 0;
     border: 2px solid rgb(0, 0, 0);
 }
+
 #lives {
     font-size: larger;
     font-weight: bold;
     color: aqua;
 }
+
 .col-12.d-flex {
     width: 30vw;
     margin-right: auto;
     margin-left: auto;
+}
+
+#VictoryTxt {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #284aa7;
+    text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
+    animation: glow 1.5s ease-in-out infinite alternate;
+    visibility: hidden;  /* Initially hidden, will be displayed when won */
+    transition: visibility 0.5s, opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+@keyframes glow {
+    0% {
+        text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
+    }
+    100% {
+        text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00;
+    }
+}
+
+#VictoryTxt.d-none {
+    visibility: hidden;
+    opacity: 0;
+}
+
+#VictoryTxt:not(.d-none) {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
 }

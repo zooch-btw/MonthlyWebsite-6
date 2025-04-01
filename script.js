@@ -1,6 +1,3 @@
-
-
-
 const wordList = [
     'gold', 'silver', 'copper', 'iron', 'tin', 'lead', 'zinc', 'mercury', 'antimony', 'bismuth', 'thallium', 'cadmium',
     'indium', 'tantalum', 'tungsten', 'molybdenum', 'rhenium', 'osmium', 'iridium', 'platinum', 'palladium',
@@ -19,9 +16,26 @@ let wrongGuesses = 0;
 let guessedLetters = [];
 let slots = [];
 const maxMistakes = 6;
-let wins = 0;
-let losses = 0;
+let wins = 0;        // Initialize at 0
+let losses = 0;      // Initialize at 0
 let lives = 6;
+let wordHistory = []; // For Word Graveyard
+
+document.getElementById('greeting').textContent = `Wins: ${wins}`;
+document.getElementById('greeting2').textContent = `Losses: ${losses}`;
+
+function updateGraveyard(word, won) {
+    wordHistory.push({ word: word, won: won });
+    const graveyardList = document.getElementById('graveyardList');
+    const listItem = document.createElement('li');
+    listItem.classList.add('graveyard-word');
+    listItem.classList.add(won ? 'won-word' : 'lost-word');
+    listItem.innerHTML = `
+        ${word} 
+        <span>${won ? '✓ Won' : '✗ Lost'}</span>
+    `;
+    graveyardList.appendChild(listItem);
+}
 
 function startGame(level) {
     selectedWord = getRandomWord(level);
@@ -100,10 +114,27 @@ function correctGuess(guessedLetter) {
 
 function endGame(won) {
     if (won) {
+        wins++;
+        document.getElementById('greeting').textContent = `Wins: ${wins}`;
         setTimeout(() => document.getElementById('VictoryTxt').classList.remove('d-none'), 100);
+        setTimeout(() => {
+            const victoryReveal = document.getElementById('victoryReveal');
+            document.getElementById('wonWord').textContent = selectedWord;
+            victoryReveal.classList.remove('d-none');
+        }, 1000);
+        updateGraveyard(selectedWord, true);
     } else {
+        losses++;
+        document.getElementById('greeting2').textContent = `Losses: ${losses}`;
         setTimeout(() => document.getElementById('LossTxt').classList.remove('d-none'), 100);
+        setTimeout(() => {
+            const revealedWord = document.getElementById('revealedWord');
+            document.getElementById('lostWord').textContent = selectedWord;
+            revealedWord.classList.remove('d-none');
+        }, 1000);
+        updateGraveyard(selectedWord, false);
     }
+    document.getElementById('guessBtn').disabled = true;
 }
 
 function restartGame() {
@@ -112,15 +143,35 @@ function restartGame() {
     document.getElementById('gameArea').classList.add('d-none');
     document.getElementById('difficultyBox').classList.remove('d-block');
     document.getElementById('gameArea').classList.remove('d-block');
+    
     document.getElementById('greeting').classList.remove('d-none');
+    document.getElementById('greeting').textContent = `Wins: ${wins}`;
     document.getElementById('greeting2').classList.remove('d-none');
+    document.getElementById('greeting2').textContent = `Losses: ${losses}`;
+    
     lives = 6;
     wrongGuesses = 0;
     guessedLetters = [];
+    selectedWord = '';
+    displayedWord = '';
+    slots = [];
+    
     document.getElementById('lives').textContent = `Lives: ${lives}`;
     document.getElementById('wrongLetters').textContent = "Wrong Guesses: ";
     document.getElementById('VictoryTxt').classList.add('d-none');
     document.getElementById('LossTxt').classList.add('d-none');
+    document.getElementById('revealedWord').classList.add('d-none');
+    document.getElementById('victoryReveal').classList.add('d-none'); // Hide victory reveal
+    
+    document.getElementById('wordDisplay').textContent = '';
+    
+    const tubes = ['tube', 'tube2', 'tube3', 'tube4', 'tube5', 'tube6'];
+    tubes.forEach(tubeId => {
+        document.getElementById(tubeId).classList.add('d-none');
+    });
+    
+    document.getElementById('LetterInput').value = '';
+    document.getElementById('guessBtn').disabled = false;
 }
 
 window.addEventListener('keypress', function (event) {

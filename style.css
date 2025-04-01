@@ -71,14 +71,7 @@ img {
     opacity: 0;
 }
 
-@keyframes glow {
-    0% {
-        text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
-    }
-    100% {
-        text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00;
-    }
-}
+
 
 #VictoryTxt.d-none {
     visibility: hidden;
@@ -89,4 +82,154 @@ img {
     visibility: visible;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
+}
+
+
+#LossTxt {
+    font-size: 3rem;
+    font-weight: bold;
+    color: orange;
+    text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red, 0 0 40px red;
+    animation: glow 1.5s ease-in-out infinite alternate;
+    visibility: hidden;  /* Initially hidden, will be displayed when won */
+    transition: visibility 0.5s, opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+
+
+#LossTxt.d-none {
+    visibility: hidden;
+    opacity: 0;
+}
+
+#LossTxt:not(.d-none) {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+/* Victory Text Animation */
+#VictoryTxt {
+    animation: victoryGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes victoryGlow {
+    0% {
+        text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 
+                    0 0 30px #28a745, 0 0 40px #28a745;
+    }
+    100% {
+        text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 
+                    0 0 40px #00ff00, 0 0 50px #00ff00;
+    }
+}
+
+/* Loss Text Animation */
+#LossTxt {
+    animation: lossGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes lossGlow {
+    0% {
+        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000,
+                    0 0 30px #ff0000, 0 0 40px #ff0000;
+    }
+    100% {
+        text-shadow: 0 0 20px #fb1616, 0 0 30px #fd1818,
+                    0 0 40px #ff2020, 0 0 50px #ff1c1c;
+    }
+}
+
+#wordGraveyard {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #000;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#graveyardList {
+    list-style: none;
+    padding: 0;
+}
+
+.graveyard-word {
+    padding: 5px 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.won-word {
+    background-color: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.lost-word {
+    background-color: rgba(255, 0, 0, 0.2);
+    color: #ff0000;
+}
+
+#revealedWord {
+    background: rgba(255, 0, 0, 0.1);
+    border: 2px solid #ff0000;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.reveal-text {
+    color: #ff4444;
+    font-weight: bold;
+    text-shadow: 0 0 5px #ff0000;
+    animation: revealGlow 1.5s ease-in-out infinite alternate;
+}
+
+#lostWord {
+    color: white;
+    font-style: italic;
+}
+
+@keyframes revealGlow {
+    0% {
+        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
+    }
+    100% {
+        text-shadow: 0 0 10px #ff4444, 0 0 20px #ff4444;
+    }
+}
+
+#victoryReveal {
+    background: rgba(40, 167, 69, 0.1); /* Green tint */
+    border: 2px solid #28a745;
+    border-radius: 10px;
+    padding: 15px;
+    max-width: 500px;
+    margin: 0 auto;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.victory-text {
+    color: #28a745;
+    font-weight: bold;
+    text-shadow: 0 0 5px #28a745;
+    animation: victoryGlowReveal 1.5s ease-in-out infinite alternate;
+}
+
+#wonWord {
+    color: white;
+    font-style: italic;
+}
+
+@keyframes victoryGlowReveal {
+    0% {
+        text-shadow: 0 0 5px #28a745, 0 0 10px #28a745;
+    }
+    100% {
+        text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+    }
 }

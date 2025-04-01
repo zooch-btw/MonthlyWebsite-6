@@ -20,6 +20,7 @@ let wins = 0;        // Initialize at 0
 let losses = 0;      // Initialize at 0
 let lives = 6;
 let wordHistory = []; // For Word Graveyard
+let isCustomGame = false; // New flag to track custom game mode
 
 document.getElementById('greeting').textContent = `Wins: ${wins}`;
 document.getElementById('greeting2').textContent = `Losses: ${losses}`;
@@ -38,12 +39,26 @@ function updateGraveyard(word, won) {
 }
 
 function startGame(level) {
+    isCustomGame = false; // Reset custom game flag
     selectedWord = getRandomWord(level);
     slots = Array(selectedWord.length).fill("_");
     updateDifficultyDisplay(level);
+    initializeGame();
+}
+
+function startCustomGame() {
+    const customWord = document.getElementById('customWordInput').value.toLowerCase().trim();
+    if (!customWord || !customWord.match(/^[a-z]+$/)) {
+        alert('Please enter a valid word using only letters (a-z)');
+        return;
+    }
+}
+
+function initializeGame() {
     displayedWord = '_'.repeat(selectedWord.length);
     document.getElementById('wordDisplay').textContent = slots.join(' ');
     document.getElementById('difficultySelection').classList.add('d-none');
+    document.getElementById('customWordSection').classList.add('d-none');
     document.getElementById('difficultyBox').classList.remove('d-none');
     document.getElementById('gameArea').classList.remove('d-none');
     document.getElementById('difficultyBox').classList.add('d-block');
@@ -51,7 +66,10 @@ function startGame(level) {
     document.getElementById('greeting').classList.add('d-none');
     document.getElementById('greeting2').classList.add('d-none');
     lives = 6;
+    wrongGuesses = 0;
+    guessedLetters = [];
     document.getElementById('lives').textContent = `Lives: ${lives}`;
+    document.getElementById('wrongLetters').textContent = "Wrong Guesses: ";
 }
 
 function getRandomWord(level) {
@@ -65,7 +83,7 @@ function getRandomWord(level) {
 
 function updateDifficultyDisplay(level) {
     let difficultyBox = document.getElementById('difficultyBox');
-    difficultyBox.classList.remove('easy', 'medium', 'hard');
+    difficultyBox.classList.remove('easy', 'medium', 'hard', 'custom');
     difficultyBox.textContent = `Difficulty: ${level.charAt(0).toUpperCase() + level.slice(1)}`;
     difficultyBox.classList.add(level);
 }
@@ -85,8 +103,10 @@ function guessLetter() {
     guessedLetters.push(guessedLetter);
     if (selectedWord.includes(guessedLetter)) {
         correctGuess(guessedLetter);
+        document.getElementById('correctSound').play(); // Play correct sound
     } else {
         wrongGuess(guessedLetter);
+        document.getElementById('wrongSound').play(); // Play wrong sound
     }
     inputField.value = '';
 }
@@ -116,7 +136,10 @@ function endGame(won) {
     if (won) {
         wins++;
         document.getElementById('greeting').textContent = `Wins: ${wins}`;
-        setTimeout(() => document.getElementById('VictoryTxt').classList.remove('d-none'), 100);
+        setTimeout(() => {
+            document.getElementById('VictoryTxt').classList.remove('d-none');
+            document.getElementById('winSound').play(); // Play win sound
+        }, 100);
         setTimeout(() => {
             const victoryReveal = document.getElementById('victoryReveal');
             document.getElementById('wonWord').textContent = selectedWord;
@@ -126,7 +149,10 @@ function endGame(won) {
     } else {
         losses++;
         document.getElementById('greeting2').textContent = `Losses: ${losses}`;
-        setTimeout(() => document.getElementById('LossTxt').classList.remove('d-none'), 100);
+        setTimeout(() => {
+            document.getElementById('LossTxt').classList.remove('d-none');
+            document.getElementById('loseSound').play(); // Play lose sound
+        }, 100);
         setTimeout(() => {
             const revealedWord = document.getElementById('revealedWord');
             document.getElementById('lostWord').textContent = selectedWord;
@@ -139,37 +165,38 @@ function endGame(won) {
 
 function restartGame() {
     document.getElementById('difficultySelection').classList.remove('d-none');
+    document.getElementById('customWordSection').classList.remove('d-none'); // Show custom word section again
     document.getElementById('difficultyBox').classList.add('d-none');
     document.getElementById('gameArea').classList.add('d-none');
     document.getElementById('difficultyBox').classList.remove('d-block');
     document.getElementById('gameArea').classList.remove('d-block');
-    
+
     document.getElementById('greeting').classList.remove('d-none');
     document.getElementById('greeting').textContent = `Wins: ${wins}`;
     document.getElementById('greeting2').classList.remove('d-none');
     document.getElementById('greeting2').textContent = `Losses: ${losses}`;
-    
+
     lives = 6;
     wrongGuesses = 0;
     guessedLetters = [];
     selectedWord = '';
     displayedWord = '';
     slots = [];
-    
+
     document.getElementById('lives').textContent = `Lives: ${lives}`;
     document.getElementById('wrongLetters').textContent = "Wrong Guesses: ";
     document.getElementById('VictoryTxt').classList.add('d-none');
     document.getElementById('LossTxt').classList.add('d-none');
     document.getElementById('revealedWord').classList.add('d-none');
-    document.getElementById('victoryReveal').classList.add('d-none'); // Hide victory reveal
-    
+    document.getElementById('victoryReveal').classList.add('d-none');
+
     document.getElementById('wordDisplay').textContent = '';
-    
+
     const tubes = ['tube', 'tube2', 'tube3', 'tube4', 'tube5', 'tube6'];
     tubes.forEach(tubeId => {
         document.getElementById(tubeId).classList.add('d-none');
     });
-    
+
     document.getElementById('LetterInput').value = '';
     document.getElementById('guessBtn').disabled = false;
 }
@@ -177,5 +204,10 @@ function restartGame() {
 window.addEventListener('keypress', function (event) {
     if (event.key === 'Enter') {
         guessLetter();
+    }
+});
+document.getElementById('customWordInput').addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+        startCustomGame();
     }
 });

@@ -22,6 +22,17 @@
                 <h1 id="greeting2" class="col-md-4 col-sm-2">Losses: </h1>
                 <h1 class="mb-4">🧪<u>Periodic Table Hangman</u>🧪</h1>
                 <div id="lives" class="m-1 p-1">Lives: 6</div>
+
+                <!-- New Custom Word Section -->
+                <div id="customWordSection">
+                    <h3>✍️<u><b><i>Enter Your Own Word (Optional):</i></b></u>✍️</h3>
+                    <input type="text" id="customWordInput" class="form-control d-inline-block w-50 text-center"
+                        placeholder="Type a word for your friend to guess">
+                    <button class="btn btn-primary mt-2" onclick="startCustomGame()">Start with Custom Word</button>
+                    <p class="text-muted mt-2">Or choose a difficulty below:</p>
+                </div>
+
+                <!--Regular Diff selction-->
                 <div id="difficultySelection">
                     <h3>☢️<u><b><i>Select Difficulty: </i></b></u>☢️</h3>
                     <button class="btn btn-success difficulty-btn" onclick="startGame('easy')"><b>Easy</b></button>
@@ -94,6 +105,10 @@
     </div>
 
     </div>
+    <audio id="correctSound" src="correct.wav"></audio>
+    <audio id="wrongSound" src="incorrect.wav"></audio>
+    <audio id="winSound" src="victory.wav"></audio>
+    <audio id="loseSound" src="defeat.wav"></audio>
     <footer></footer>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

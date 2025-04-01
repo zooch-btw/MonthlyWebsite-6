@@ -233,3 +233,22 @@ img {
         text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
     }
 }
+.custom {
+    background-color: rgb(147, 112, 219); /* Purple for custom */
+    opacity: 85%;
+    border: 2px solid rgb(0, 0, 0);
+}
+
+#customWordSection {
+    margin-bottom: 20px;
+}
+
+#customWordInput {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+#diff2 {
+    color: white
+    font-weight bolder;
+}

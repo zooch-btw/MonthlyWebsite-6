@@ -84,6 +84,7 @@ let slots = [];
 const maxMistakes = 6;
 let wins = 0
 let losses = 0
+let lives = 6
 
 function startGame(level) {
     selectedWord = getRandomWord(level)
@@ -171,15 +172,24 @@ function guessLetter() {
 function wrongGuess(guessedLetter) {
     //increment the number of wrong guesses
     wrongGuesses++
+    lives--
+    document.getElementById('lives').textContent = `Lives: ${lives}`
     // add the guessed letter to HTML div
     document.getElementById('wrongLetters').textContent += ` ${guessedLetter}`
 
     document.getElementById('tube').src = `imgs/tube${6 - wrongGuesses}.webp`
+    document.getElementById('tube1').src = `imgs/tube${5 - wrongGuesses}.webp`
+    document.getElementById('tube2').src = `imgs/tube${4 - wrongGuesses}.webp`
+    document.getElementById('tube3').src = `imgs/tube${3 - wrongGuesses}.webp`
+    document.getElementById('tube4').src = `imgs/tube${2 - wrongGuesses}.webp`
+    document.getElementById('tube5').src = `imgs/tube${1 - wrongGuesses}.webp`
+    document.getElementById('tube6').src = `imgs/tube${0 - wrongGuesses}.webp`
 
 
 
     // Check to see if wrongGuesses ===  MaxMistakes if it is, call endgame(false)
     if (wrongGuesses === maxMistakes) {
+        document.getElementById('LossTxt').classList.remove('d-none')
         endGame(false)
     }
 }
@@ -193,12 +203,15 @@ function correctGuess(guessedLetter) {
         endGame(true)
     }
 
+    displayedWord = newDisplayedWord
+
 }
 function endGame(won) {
-    console.log(won);
     if (won === true) {
         setTimeout(() => document.getElementById('VictoryTxt').classList.remove('d-none'), 100, document)
-    } else {
+
+    } else if (won === false) {
+        console.log('here!')
         setTimeout(() => document.getElementById('LossTxt').classList.remove('d-none'), 100, document)
     }
 }
@@ -217,6 +230,8 @@ function restartGame() {
     document.getElementById('greeting').classList.remove('d-none')
 
     document.getElementById('greeting2').classList.remove('d-none')
+
+    lives = 6;
 }
 // Added event listener to detect "Enter" key press in the input
 window.addEventListener('keypress', function (event) {

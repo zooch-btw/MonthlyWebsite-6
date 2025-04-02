@@ -149,7 +149,7 @@ body {
 
 .d-none { display: none !important; }
 
-.imgs{
+.imgs{ /* imgs for lost health */
     height: 100%;
     width: 100%;
 }

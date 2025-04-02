@@ -15,7 +15,7 @@ let selectedWord = '';
 let displayedWord = '';
 let wrongGuesses = 0;
 let guessedLetters = [];
-let slots = [];
+let slots = []; //array to hold the slots for the word
 const maxMistakes = 6;
 let wins = 0;        // Initialize at 0
 let losses = 0;      // Initialize at 0
@@ -34,7 +34,7 @@ function updateGraveyard(word, won) {
     listItem.classList.add(won ? 'won-word' : 'lost-word');
     listItem.innerHTML = `
         ${word} 
-        <span>${won ? '✓ Won' : '✗ Lost'}</span>
+        <span>${won ? 'Won ✓' : 'Lost ✗'}</span>
     `;
     graveyardList.appendChild(listItem);
 }
@@ -44,7 +44,7 @@ function startGame(level) {
     selectedWord = getRandomWord(level);
     slots = Array(selectedWord.length).fill("_");
     updateDifficultyDisplay(level);
-    initializeGame();
+    initializeGame(); // Call the function to start the game either standard or custom
 }
 
 function startCustomGame() {

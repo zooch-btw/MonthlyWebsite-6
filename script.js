@@ -47,7 +47,7 @@ function startGame(level) {
 function startCustomGame() {
     const customWord = document.getElementById('customWordInput').value.toLowerCase().trim();
     if (!customWord || !customWord.match(/^[a-z]+$/)) {
-        alert('Please enter a valid word (letters only)');
+        document.getElementById('enterlet').play();
         return;
     }
     isCustomGame = true;
@@ -95,7 +95,7 @@ function guessLetter() {
     const inputField = document.getElementById('letterInput');
     const guessedLetter = inputField.value.toLowerCase();
     if (!guessedLetter.match(/^[a-z]$/)) {
-        alert('Please enter a single letter');
+        document.getElementById('enterlet').play();
         inputField.value = '';
         return;
     }

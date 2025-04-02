@@ -156,17 +156,17 @@ function endGame(won) {
         losses++;
         document.getElementById('greeting2').textContent = `Losses: ${losses}`;
         setTimeout(() => {
-            document.getElementById('LossTxt').classList.remove('d-none');
+            document.getElementById('LossTxt').classList.remove('d-none'); // Show Loss txt
             document.getElementById('loseSound').play(); // Play lose sound
         }, 100);
         setTimeout(() => {
             const revealedWord = document.getElementById('revealedWord');
-            document.getElementById('lostWord').textContent = selectedWord;
-            revealedWord.classList.remove('d-none');
+            document.getElementById('lostWord').textContent = selectedWord; // Reveal the selected word as lost
+            revealedWord.classList.remove('d-none'); // Reveal the word
         }, 1000);
-        updateGraveyard(selectedWord, false);
+        updateGraveyard(selectedWord, false); // Add to graveyard lost words
     }
-    document.getElementById('guessBtn').disabled = true;
+    document.getElementById('guessBtn').disabled = true; // disable guess button
 }
 
 function restartGame() {

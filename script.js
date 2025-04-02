@@ -159,7 +159,10 @@ function endGame(won) {
         wins++;
         setTimeout(() => {
             document.getElementById('victoryText').classList.remove('d-none');
-            if (flawlessVictory) document.getElementById('flawlessVictoryText').classList.remove('d-none');
+            if (flawlessVictory) {
+                document.getElementById('flawlessVictoryText').classList.remove('d-none');
+                document.getElementById('flawvicsnd').play();
+            }
             document.getElementById('winSound').play();
         }, 100);
         setTimeout(() => {

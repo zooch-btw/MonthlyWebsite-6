@@ -252,3 +252,34 @@ img {
     color: white
     font-weight bolder;
 }
+
+#FlawlessVictoryTxt {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #FFD700; /* Gold color */
+    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+    animation: flawlessGlow 1.5s ease-in-out infinite alternate;
+    visibility: hidden;
+    transition: visibility 0.5s, opacity 0.5s ease-in-out;
+    opacity: 0;
+}
+
+#FlawlessVictoryTxt.d-none {
+    visibility: hidden;
+    opacity: 0;
+}
+
+#FlawlessVictoryTxt:not(.d-none) {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+@keyframes flawlessGlow {
+    0% {
+        text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
+    }
+    100% {
+        text-shadow: 0 0 20px #FFFF00, 0 0 30px #FFFF00, 0 0 40px #FFFF00;
+    }
+}

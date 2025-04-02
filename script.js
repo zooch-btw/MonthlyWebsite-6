@@ -10,6 +10,7 @@ const wordList = [
     'tennessine', 'oganesson'
 ];
 //define variables
+let flawlessVictory = true;
 let selectedWord = '';
 let displayedWord = '';
 let wrongGuesses = 0;
@@ -68,6 +69,7 @@ function initializeGame() {
     lives = 6;
     wrongGuesses = 0;
     guessedLetters = [];
+    flawlessVictory = true; // Reset for a new game
     document.getElementById('lives').textContent = `Lives: ${lives}`;
     document.getElementById('wrongLetters').textContent = "Wrong Guesses: ";
 }
@@ -114,6 +116,7 @@ function guessLetter() {
 function wrongGuess(guessedLetter) {
     wrongGuesses++;
     lives--;
+    flawlessVictory = false; // A wrong guess means no flawless victory
     document.getElementById('lives').textContent = `Lives: ${lives}`;
     document.getElementById('wrongLetters').textContent += ` ${guessedLetter}`;
     if (wrongGuesses === maxMistakes) {
@@ -138,6 +141,9 @@ function endGame(won) {
         document.getElementById('greeting').textContent = `Wins: ${wins}`;
         setTimeout(() => {
             document.getElementById('VictoryTxt').classList.remove('d-none');
+            if (flawlessVictory) {
+                document.getElementById('FlawlessVictoryTxt').classList.remove('d-none'); // Show Flawless Victory
+            }
             document.getElementById('winSound').play(); // Play win sound
         }, 100);
         setTimeout(() => {
@@ -165,7 +171,7 @@ function endGame(won) {
 
 function restartGame() {
     document.getElementById('difficultySelection').classList.remove('d-none');
-    document.getElementById('customWordSection').classList.remove('d-none'); // Show custom word section again
+    document.getElementById('customWordSection').classList.remove('d-none');
     document.getElementById('difficultyBox').classList.add('d-none');
     document.getElementById('gameArea').classList.add('d-none');
     document.getElementById('difficultyBox').classList.remove('d-block');
@@ -182,10 +188,12 @@ function restartGame() {
     selectedWord = '';
     displayedWord = '';
     slots = [];
+    flawlessVictory = true; // Reset for next game
 
     document.getElementById('lives').textContent = `Lives: ${lives}`;
     document.getElementById('wrongLetters').textContent = "Wrong Guesses: ";
     document.getElementById('VictoryTxt').classList.add('d-none');
+    document.getElementById('FlawlessVictoryTxt').classList.add('d-none'); // Hide Flawless Victory
     document.getElementById('LossTxt').classList.add('d-none');
     document.getElementById('revealedWord').classList.add('d-none');
     document.getElementById('victoryReveal').classList.add('d-none');

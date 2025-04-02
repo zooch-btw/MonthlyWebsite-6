@@ -1,151 +1,62 @@
-
-html {
-    height: 100%;
-    width: 100%;
-}
 body {
-    height: 100%;
-    width: 100%;
     background: linear-gradient(to left, #e66465, #9198e5);
+    color: #2C2F59; /* Dark indigo */
+    min-height: 100vh;
     text-align: center;
 }
 
 .easy {
-    background-color: rgb(41, 233, 41);
-    opacity: 85%;
-    border: 2px solid rgb(0, 0, 0);
+    background-color: rgba(41, 233, 41, 0.85);
+    border: 2px solid #2C2F59;
 }
+
 .medium {
-    background-color: rgb(231, 231, 22);
-    opacity: 85%;
-    border: 2px solid rgb(0, 0, 0);
+    background-color: rgba(231, 231, 22, 0.85);
+    border: 2px solid #2C2F59;
 }
+
 .hard {
-    background-color: rgb(235, 23, 23);
-    opacity: 85%;
-    border: 2px solid rgb(0, 0, 0);
+    background-color: rgba(235, 23, 23, 0.85);
+    border: 2px solid #2C2F59;
 }
 
-#ctn2 {
-    justify-content: center;
-    align-items: center;
-    margin-top: auto;
+.custom {
+    background-color: rgba(147, 112, 219, 0.85);
+    border: 2px solid #2C2F59;
 }
 
-.container {
-    height: 50%;
-    width: 100%;
+.health-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    max-width: 600px; /* Adjust based on total image width */
+    position: relative;
 }
 
-img {
-    width: 50%;
-    height: 75%;
-    margin: 2%;
-    border: 2px solid rgb(0, 0, 0);
+.health-part {
+    width: 16.66%; /* 100% / 6 parts */
+    height: auto;
+    margin: 0;
+    padding: 0;
+    border: none; /* No individual borders */
+}
+
+.health-container.full-image {
+    border: 2px solid #2C2F59; /* Border around full image */
 }
 
 #lives {
-    font-size: larger;
+    font-size: 1.5rem;
     font-weight: bold;
     color: aqua;
 }
 
-.col-12.d-flex {
-    width: 30vw;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-#VictoryTxt {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #284aa7;
-    text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
-    animation: glow 1.5s ease-in-out infinite alternate;
-    visibility: hidden;  /* Initially hidden, will be displayed when won */
-    transition: visibility 0.5s, opacity 0.5s ease-in-out;
-    opacity: 0;
-}
-
-
-
-#VictoryTxt.d-none {
-    visibility: hidden;
-    opacity: 0;
-}
-
-#VictoryTxt:not(.d-none) {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-}
-
-
-#LossTxt {
-    font-size: 3rem;
-    font-weight: bold;
-    color: orange;
-    text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px red, 0 0 40px red;
-    animation: glow 1.5s ease-in-out infinite alternate;
-    visibility: hidden;  /* Initially hidden, will be displayed when won */
-    transition: visibility 0.5s, opacity 0.5s ease-in-out;
-    opacity: 0;
-}
-
-
-
-#LossTxt.d-none {
-    visibility: hidden;
-    opacity: 0;
-}
-
-#LossTxt:not(.d-none) {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-}
-
-/* Victory Text Animation */
-#VictoryTxt {
-    animation: victoryGlow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes victoryGlow {
-    0% {
-        text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 
-                    0 0 30px #28a745, 0 0 40px #28a745;
-    }
-    100% {
-        text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 
-                    0 0 40px #00ff00, 0 0 50px #00ff00;
-    }
-}
-
-/* Loss Text Animation */
-#LossTxt {
-    animation: lossGlow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes lossGlow {
-    0% {
-        text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000,
-                    0 0 30px #ff0000, 0 0 40px #ff0000;
-    }
-    100% {
-        text-shadow: 0 0 20px #fb1616, 0 0 30px #fd1818,
-                    0 0 40px #ff2020, 0 0 50px #ff1c1c;
-    }
-}
-
 #wordGraveyard {
     background: rgba(255, 255, 255, 0.1);
-    border: 2px solid #000;
+    border: 2px solid #2C2F59;
     max-width: 500px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
+    padding: 15px;
 }
 
 #graveyardList {
@@ -172,114 +83,63 @@ img {
     color: #ff0000;
 }
 
+#victoryText h1 {
+    font-size: 3rem;
+    color: #284aa7;
+    text-shadow: 0 0 10px #28a745;
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+#flawlessVictoryText h2 {
+    font-size: 2rem;
+    color: #FFD700;
+    text-shadow: 0 0 10px #FFD700;
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+#lossText h1 {
+    font-size: 3rem;
+    color: orange;
+    text-shadow: 0 0 10px red;
+    animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px currentColor; }
+    to { text-shadow: 0 0 20px currentColor; }
+}
+
+#revealedWord, #victoryReveal {
+    max-width: 500px;
+    margin: 0 auto 20px;
+    padding: 15px;
+    border-radius: 10px;
+    transition: opacity 0.5s ease-in-out;
+}
+
 #revealedWord {
     background: rgba(255, 0, 0, 0.1);
     border: 2px solid #ff0000;
-    border-radius: 10px;
-    padding: 15px;
-    max-width: 500px;
-    margin: 0 auto;
-    transition: opacity 0.5s ease-in-out;
 }
 
 .reveal-text {
     color: #ff4444;
-    font-weight: bold;
     text-shadow: 0 0 5px #ff0000;
-    animation: revealGlow 1.5s ease-in-out infinite alternate;
-}
-
-#lostWord {
-    color: white;
-    font-style: italic;
-}
-
-@keyframes revealGlow {
-    0% {
-        text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000;
-    }
-    100% {
-        text-shadow: 0 0 10px #ff4444, 0 0 20px #ff4444;
-    }
 }
 
 #victoryReveal {
-    background: rgba(40, 167, 69, 0.1); /* Green tint */
+    background: rgba(40, 167, 69, 0.1);
     border: 2px solid #28a745;
-    border-radius: 10px;
-    padding: 15px;
-    max-width: 500px;
-    margin: 0 auto;
-    transition: opacity 0.5s ease-in-out;
 }
 
 .victory-text {
     color: #28a745;
-    font-weight: bold;
     text-shadow: 0 0 5px #28a745;
-    animation: victoryGlowReveal 1.5s ease-in-out infinite alternate;
 }
 
-#wonWord {
+#lostWord, #wonWord {
     color: white;
     font-style: italic;
 }
 
-@keyframes victoryGlowReveal {
-    0% {
-        text-shadow: 0 0 5px #28a745, 0 0 10px #28a745;
-    }
-    100% {
-        text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
-    }
-}
-.custom {
-    background-color: rgb(147, 112, 219); /* Purple for custom */
-    opacity: 85%;
-    border: 2px solid rgb(0, 0, 0);
-}
-
-#customWordSection {
-    margin-bottom: 20px;
-}
-
-#customWordInput {
-    max-width: 300px;
-    margin: 0 auto;
-}
-
-#diff2 {
-    color: white
-    font-weight bolder;
-}
-
-#FlawlessVictoryTxt {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #FFD700; /* Gold color */
-    text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
-    animation: flawlessGlow 1.5s ease-in-out infinite alternate;
-    visibility: hidden;
-    transition: visibility 0.5s, opacity 0.5s ease-in-out;
-    opacity: 0;
-}
-
-#FlawlessVictoryTxt.d-none {
-    visibility: hidden;
-    opacity: 0;
-}
-
-#FlawlessVictoryTxt:not(.d-none) {
-    visibility: visible;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out;
-}
-
-@keyframes flawlessGlow {
-    0% {
-        text-shadow: 0 0 10px #FFD700, 0 0 20px #FFD700, 0 0 30px #FFD700;
-    }
-    100% {
-        text-shadow: 0 0 20px #FFFF00, 0 0 30px #FFFF00, 0 0 40px #FFFF00;
-    }
-}
+.d-none { display: none !important; }

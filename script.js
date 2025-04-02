@@ -9,73 +9,74 @@ const wordList = [
     'meitnerium', 'darmstadtium', 'roentgenium', 'copernicium', 'nihonium', 'flerovium', 'moscovium', 'livermorium',
     'tennessine', 'oganesson'
 ];
-//define variables
 let flawlessVictory = true;
 let selectedWord = '';
 let displayedWord = '';
 let wrongGuesses = 0;
 let guessedLetters = [];
-let slots = []; //array to hold the slots for the word
+let slots = [];
 const maxMistakes = 6;
-let wins = 0;        // Initialize at 0
-let losses = 0;      // Initialize at 0
+let wins = 0;
+let losses = 0;
 let lives = 6;
-let wordHistory = []; // For Word Graveyard
-let isCustomGame = false; // New flag to track custom game mode
+let wordHistory = [];
+let isCustomGame = false;
 
-document.getElementById('greeting').textContent = `Wins: ${wins}`;
-document.getElementById('greeting2').textContent = `Losses: ${losses}`;
+function initializeDisplay() {
+    document.getElementById('winsDisplay').textContent = `Wins: ${wins}`;
+    document.getElementById('lossesDisplay').textContent = `Losses: ${losses}`;
+    document.getElementById('lives').textContent = `Lives: ${lives}`;
+}
 
 function updateGraveyard(word, won) {
-    wordHistory.push({ word: word, won: won });
-    const graveyardList = document.getElementById('graveyardList');
+    wordHistory.push({ word, won });
     const listItem = document.createElement('li');
-    listItem.classList.add('graveyard-word');
-    listItem.classList.add(won ? 'won-word' : 'lost-word');
-    listItem.innerHTML = `
-        ${word} 
-        <span>${won ? 'Won ✓' : 'Lost ✗'}</span>
-    `;
-    graveyardList.appendChild(listItem);
+    listItem.classList.add('graveyard-word', won ? 'won-word' : 'lost-word');
+    listItem.innerHTML = `${word} <span>${won ? 'Won ✓' : 'Lost ✗'}</span>`;
+    document.getElementById('graveyardList').appendChild(listItem);
 }
 
 function startGame(level) {
-    isCustomGame = false; // Reset custom game flag
+    isCustomGame = false;
     selectedWord = getRandomWord(level);
-    slots = Array(selectedWord.length).fill("_");
+    slots = Array(selectedWord.length).fill('_');
     updateDifficultyDisplay(level);
-    initializeGame(); // Call the function to start the game either standard or custom
+    initializeGame();
 }
 
 function startCustomGame() {
     const customWord = document.getElementById('customWordInput').value.toLowerCase().trim();
     if (!customWord || !customWord.match(/^[a-z]+$/)) {
-        alert('Please enter a valid word using only letters (a-z)');
+        alert('Please enter a valid word (letters only)');
         return;
     }
+    isCustomGame = true;
+    selectedWord = customWord;
+    slots = Array(selectedWord.length).fill('_');
+    updateDifficultyDisplay('custom');
+    initializeGame();
 }
 
 function initializeGame() {
-    displayedWord = '_'.repeat(selectedWord.length);
-    document.getElementById('wordDisplay').textContent = slots.join(' ');
+    displayedWord = slots.join(' ');
+    document.getElementById('wordDisplay').textContent = displayedWord;
     document.getElementById('difficultySelection').classList.add('d-none');
     document.getElementById('customWordSection').classList.add('d-none');
     document.getElementById('difficultyBox').classList.remove('d-none');
     document.getElementById('gameArea').classList.remove('d-none');
-    document.getElementById('difficultyBox').classList.add('d-block');
-    document.getElementById('gameArea').classList.add('d-block');
-    document.getElementById('greeting').classList.add('d-none');
-    document.getElementById('greeting2').classList.add('d-none');
+    document.getElementById('winsDisplay').classList.add('d-none');
+    document.getElementById('lossesDisplay').classList.add('d-none');
     lives = 6;
     wrongGuesses = 0;
     guessedLetters = [];
-    flawlessVictory = true; // Reset for a new game
+    flawlessVictory = true;
     document.getElementById('lives').textContent = `Lives: ${lives}`;
-    document.getElementById('wrongLetters').textContent = "Wrong Guesses: ";
+    document.getElementById('wrongLetters').textContent = 'Wrong Guesses:';
+    updateHealthDisplay();
 }
 
 function getRandomWord(level) {
-    let filteredWords = wordList.filter(word => {
+    const filteredWords = wordList.filter(word => {
         if (level === 'easy') return word.length <= 4;
         if (level === 'medium') return word.length >= 5 && word.length <= 7;
         if (level === 'hard') return word.length >= 8;
@@ -84,17 +85,17 @@ function getRandomWord(level) {
 }
 
 function updateDifficultyDisplay(level) {
-    let difficultyBox = document.getElementById('difficultyBox');
+    const difficultyBox = document.getElementById('difficultyBox');
     difficultyBox.classList.remove('easy', 'medium', 'hard', 'custom');
     difficultyBox.textContent = `Difficulty: ${level.charAt(0).toUpperCase() + level.slice(1)}`;
     difficultyBox.classList.add(level);
 }
 
 function guessLetter() {
-    let inputField = document.getElementById('LetterInput');
-    let guessedLetter = inputField.value.toLowerCase();
+    const inputField = document.getElementById('letterInput');
+    const guessedLetter = inputField.value.toLowerCase();
     if (!guessedLetter.match(/^[a-z]$/)) {
-        alert('Please enter a letter');
+        alert('Please enter a single letter');
         inputField.value = '';
         return;
     }
@@ -105,10 +106,10 @@ function guessLetter() {
     guessedLetters.push(guessedLetter);
     if (selectedWord.includes(guessedLetter)) {
         correctGuess(guessedLetter);
-        document.getElementById('correctSound').play(); // Play correct sound
+        document.getElementById('correctSound').play();
     } else {
         wrongGuess(guessedLetter);
-        document.getElementById('wrongSound').play(); // Play wrong sound
+        document.getElementById('wrongSound').play();
     }
     inputField.value = '';
 }
@@ -116,12 +117,30 @@ function guessLetter() {
 function wrongGuess(guessedLetter) {
     wrongGuesses++;
     lives--;
-    flawlessVictory = false; // A wrong guess means no flawless victory
+    flawlessVictory = false;
     document.getElementById('lives').textContent = `Lives: ${lives}`;
     document.getElementById('wrongLetters').textContent += ` ${guessedLetter}`;
+    updateHealthDisplay();
     if (wrongGuesses === maxMistakes) {
-        document.getElementById('LossTxt').classList.remove('d-none');
+        document.getElementById('lossText').classList.remove('d-none');
         endGame(false);
+    }
+}
+
+function updateHealthDisplay() {
+    const healthContainer = document.querySelector('.health-container');
+    for (let i = 1; i <= 6; i++) {
+        const healthImg = document.getElementById(`healthImage${i}`);
+        if (i <= wrongGuesses) {
+            healthImg.classList.remove('d-none');
+        } else {
+            healthImg.classList.add('d-none');
+        }
+    }
+    if (wrongGuesses === 6) {
+        healthContainer.classList.add('full-image');
+    } else {
+        healthContainer.classList.remove('full-image');
     }
 }
 
@@ -129,44 +148,38 @@ function correctGuess(guessedLetter) {
     for (let i = 0; i < selectedWord.length; i++) {
         if (selectedWord[i] === guessedLetter) slots[i] = guessedLetter;
     }
-    document.getElementById("wordDisplay").textContent = slots.join(" ");
-    if (!slots.includes("_")) {
-        endGame(true);
-    }
+    displayedWord = slots.join(' ');
+    document.getElementById('wordDisplay').textContent = displayedWord;
+    if (!slots.includes('_')) endGame(true);
 }
 
 function endGame(won) {
+    document.getElementById('guessBtn').disabled = true;
     if (won) {
         wins++;
-        document.getElementById('greeting').textContent = `Wins: ${wins}`;
         setTimeout(() => {
-            document.getElementById('VictoryTxt').classList.remove('d-none');
-            if (flawlessVictory) {
-                document.getElementById('FlawlessVictoryTxt').classList.remove('d-none'); // Show Flawless Victory
-            }
-            document.getElementById('winSound').play(); // Play win sound
+            document.getElementById('victoryText').classList.remove('d-none');
+            if (flawlessVictory) document.getElementById('flawlessVictoryText').classList.remove('d-none');
+            document.getElementById('winSound').play();
         }, 100);
         setTimeout(() => {
-            const victoryReveal = document.getElementById('victoryReveal');
             document.getElementById('wonWord').textContent = selectedWord;
-            victoryReveal.classList.remove('d-none');
+            document.getElementById('victoryReveal').classList.remove('d-none');
         }, 1000);
         updateGraveyard(selectedWord, true);
     } else {
         losses++;
-        document.getElementById('greeting2').textContent = `Losses: ${losses}`;
         setTimeout(() => {
-            document.getElementById('LossTxt').classList.remove('d-none'); // Show Loss txt
-            document.getElementById('loseSound').play(); // Play lose sound
+            document.getElementById('lossText').classList.remove('d-none');
+            document.getElementById('loseSound').play();
         }, 100);
         setTimeout(() => {
-            const revealedWord = document.getElementById('revealedWord');
-            document.getElementById('lostWord').textContent = selectedWord; // Reveal the selected word as lost
-            revealedWord.classList.remove('d-none'); // Reveal the word
+            document.getElementById('lostWord').textContent = selectedWord;
+            document.getElementById('revealedWord').classList.remove('d-none');
         }, 1000);
-        updateGraveyard(selectedWord, false); // Add to graveyard lost words
+        updateGraveyard(selectedWord, false);
     }
-    document.getElementById('guessBtn').disabled = true; // disable guess button
+    initializeDisplay();
 }
 
 function restartGame() {
@@ -174,13 +187,8 @@ function restartGame() {
     document.getElementById('customWordSection').classList.remove('d-none');
     document.getElementById('difficultyBox').classList.add('d-none');
     document.getElementById('gameArea').classList.add('d-none');
-    document.getElementById('difficultyBox').classList.remove('d-block');
-    document.getElementById('gameArea').classList.remove('d-block');
-
-    document.getElementById('greeting').classList.remove('d-none');
-    document.getElementById('greeting').textContent = `Wins: ${wins}`;
-    document.getElementById('greeting2').classList.remove('d-none');
-    document.getElementById('greeting2').textContent = `Losses: ${losses}`;
+    document.getElementById('winsDisplay').classList.remove('d-none');
+    document.getElementById('lossesDisplay').classList.remove('d-none');
 
     lives = 6;
     wrongGuesses = 0;
@@ -188,34 +196,29 @@ function restartGame() {
     selectedWord = '';
     displayedWord = '';
     slots = [];
-    flawlessVictory = true; // Reset for next game
+    flawlessVictory = true;
 
     document.getElementById('lives').textContent = `Lives: ${lives}`;
-    document.getElementById('wrongLetters').textContent = "Wrong Guesses: ";
-    document.getElementById('VictoryTxt').classList.add('d-none');
-    document.getElementById('FlawlessVictoryTxt').classList.add('d-none'); // Hide Flawless Victory
-    document.getElementById('LossTxt').classList.add('d-none');
+    document.getElementById('wrongLetters').textContent = 'Wrong Guesses:';
+    document.getElementById('victoryText').classList.add('d-none');
+    document.getElementById('flawlessVictoryText').classList.add('d-none');
+    document.getElementById('lossText').classList.add('d-none');
     document.getElementById('revealedWord').classList.add('d-none');
     document.getElementById('victoryReveal').classList.add('d-none');
-
     document.getElementById('wordDisplay').textContent = '';
-
-    const tubes = ['tube', 'tube2', 'tube3', 'tube4', 'tube5', 'tube6'];
-    tubes.forEach(tubeId => {
-        document.getElementById(tubeId).classList.add('d-none');
-    });
-
-    document.getElementById('LetterInput').value = '';
+    document.getElementById('letterInput').value = '';
     document.getElementById('guessBtn').disabled = false;
+    updateHealthDisplay();
 }
 
-window.addEventListener('keypress', function (event) {
-    if (event.key === 'Enter') {
+window.addEventListener('keypress', (event) => {
+    if (event.key === 'Enter' && !document.getElementById('gameArea').classList.contains('d-none')) {
         guessLetter();
     }
 });
-document.getElementById('customWordInput').addEventListener('keypress', function (event) {
-    if (event.key === 'Enter') {
-        startCustomGame();
-    }
+
+document.getElementById('customWordInput').addEventListener('keypress', (event) => {
+    if (event.key === 'Enter') startCustomGame();
 });
+
+initializeDisplay();

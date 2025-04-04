@@ -133,12 +133,12 @@ body {
 }
 
 #victoryReveal {
-    background: rgba(40, 167, 69, 0.1);
+    background: rgba(11, 218, 59, 0.1);
     border: 2px solid #28a745;
 }
 
 .victory-text {
-    color: #28a745;
+    color: #17a338;
     text-shadow: 0 0 5px #28a745;
 }
 

@@ -49,6 +49,7 @@ main {
     justify-content: center;
     align-items: center;
     max-width: 600px;
+    width: 100%;
     margin: 0 auto;
     border: 2px solid #2C2F59;
     border-radius: 8px;
@@ -182,14 +183,13 @@ main {
 }
 
 .btn {
-    margin: 5px;
+    margin: 5px 0;
     padding: 10px 20px;
     border-radius: 8px;
 }
 
 input.form-control {
-    max-width: 300px;
-    margin: 0 auto 10px;
+    margin: 0;
     padding: 10px;
     border-radius: 8px;
 }
@@ -206,15 +206,54 @@ h1, h2, h3 {
     min-width: 100px;
 }
 
-/* New styling for "Or select difficulty:" */
 .difficulty-prompt {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
     font-style: italic;
-    color: #ffffff; /* White for contrast against gradient */
-    background: rgba(44, 47, 89, 0.3); /* Subtle background matching #2C2F59 */
-    padding: 5px 15px;
-    border-radius: 5px;
-    display: inline-block; /* Keeps it centered and compact */
-    margin-top: 10px;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Subtle glow */
+    font-weight: bold;
+    color: #FFD700;
+    background: linear-gradient(45deg, rgba(44, 47, 89, 0.5), rgba(255, 255, 255, 0.2));
+    padding: 8px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    margin: 10px auto;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.7), 0 0 15px rgba(255, 215, 0, 0.5);
+    border: 1px solid #2C2F59;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.difficulty-prompt:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+}
+
+/* Custom input and button styling */
+.custom-input {
+    width: 200px;
+    border-radius: 8px;
+}
+
+.custom-btn {
+    border-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .difficulty-prompt {
+        font-size: 1.1rem;
+        padding: 6px 15px;
+    }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.5rem; }
+    h3 { font-size: 1.3rem; }
+    .custom-input { 
+        width: 150px; 
+        margin-bottom: 5px;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 768px) {
+    .difficulty-prompt {
+        font-size: 1.2rem;
+    }
+    .custom-input { width: 180px; }
 }

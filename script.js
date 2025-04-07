@@ -131,7 +131,6 @@ function wrongGuess(guessedLetter) {
 }
 
 function updateHealthDisplay() {
-    const healthContainer = document.querySelector('.health-container');
     for (let i = 1; i <= 6; i++) {
         const healthImg = document.getElementById(`healthImage${i}`);
         if (i <= wrongGuesses) {
@@ -139,11 +138,6 @@ function updateHealthDisplay() {
         } else {
             healthImg.classList.add('d-none');
         }
-    }
-    if (wrongGuesses === 6) {
-        healthContainer.classList.add('full-image');
-    } else {
-        healthContainer.classList.remove('full-image');
     }
 }
 
@@ -171,7 +165,7 @@ function getHint() {
         guessedLetters.push(hintLetter);
         correctGuess(hintLetter);
         hintsUsed++;
-        lives--; // Hint costs a life
+        lives--;
         document.getElementById('lives').textContent = `Lives: ${lives}`;
         document.getElementById('correctSound').play();
         updateHealthDisplay();

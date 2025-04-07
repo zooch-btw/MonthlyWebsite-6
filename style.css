@@ -88,10 +88,10 @@ body {
     color: #ff0000;
 }
 
-#victoryText h1 {
+#VictoryTxt h1 {
     font-size: 3rem;
     color: #284aa7;
-    text-shadow: 0 0 10px #28a745;
+    text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
     animation: glow 1.5s ease-in-out infinite alternate;
 }
 
@@ -102,16 +102,24 @@ body {
     animation: glow 1.5s ease-in-out infinite alternate;
 }
 
-#lossText h1 {
+#LossTxt h1 {
     font-size: 3rem;
     color: orange;
-    text-shadow: 0 0 10px red;
+    text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
     animation: glow 1.5s ease-in-out infinite alternate;
 }
 
 @keyframes glow {
-    from { text-shadow: 0 0 10px currentColor; }
-    to { text-shadow: 0 0 20px currentColor; }
+    0% {
+        text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
+    }
+    100% {
+        text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00;
+    }
+}
+
+#hintBtn, #giveUpBtn {
+    margin-left: 10px;
 }
 
 #revealedWord, #victoryReveal {
@@ -149,7 +157,7 @@ body {
 
 .d-none { display: none !important; }
 
-.imgs{
+.imgs {
     height: 30%;
     width: 10%;
 }

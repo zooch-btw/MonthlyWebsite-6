@@ -21,6 +21,7 @@ let losses = 0;
 let lives = 6;
 let wordHistory = [];
 let isCustomGame = false;
+let hintsUsed = 0;
 
 function initializeDisplay() {
     document.getElementById('winsDisplay').textContent = `Wins: ${wins}`;
@@ -69,9 +70,11 @@ function initializeGame() {
     lives = 6;
     wrongGuesses = 0;
     guessedLetters = [];
+    hintsUsed = 0;
     flawlessVictory = true;
     document.getElementById('lives').textContent = `Lives: ${lives}`;
     document.getElementById('wrongLetters').textContent = 'Wrong Guesses:';
+    document.getElementById('hintBtn').disabled = false;
     updateHealthDisplay();
 }
 
@@ -122,7 +125,7 @@ function wrongGuess(guessedLetter) {
     document.getElementById('wrongLetters').textContent += ` ${guessedLetter}`;
     updateHealthDisplay();
     if (wrongGuesses === maxMistakes) {
-        document.getElementById('lossText').classList.remove('d-none');
+        document.getElementById('LossTxt').classList.remove('d-none');
         endGame(false);
     }
 }
@@ -153,12 +156,42 @@ function correctGuess(guessedLetter) {
     if (!slots.includes('_')) endGame(true);
 }
 
+function getHint() {
+    if (hintsUsed >= 2 || lives <= 1) {
+        document.getElementById('hintBtn').disabled = true;
+        return;
+    }
+    const unguessedIndices = slots
+        .map((slot, index) => (slot === '_' ? index : -1))
+        .filter(index => index !== -1);
+    if (unguessedIndices.length === 0) return;
+    const hintIndex = unguessedIndices[Math.floor(Math.random() * unguessedIndices.length)];
+    const hintLetter = selectedWord[hintIndex];
+    if (!guessedLetters.includes(hintLetter)) {
+        guessedLetters.push(hintLetter);
+        correctGuess(hintLetter);
+        hintsUsed++;
+        lives--; // Hint costs a life
+        document.getElementById('lives').textContent = `Lives: ${lives}`;
+        document.getElementById('correctSound').play();
+        updateHealthDisplay();
+    }
+    if (hintsUsed >= 2) document.getElementById('hintBtn').disabled = true;
+}
+
+function giveUp() {
+    document.getElementById('LossTxt').classList.remove('d-none');
+    endGame(false);
+}
+
 function endGame(won) {
     document.getElementById('guessBtn').disabled = true;
+    document.getElementById('hintBtn').disabled = true;
+    document.getElementById('giveUpBtn').disabled = true;
     if (won) {
         wins++;
         setTimeout(() => {
-            document.getElementById('victoryText').classList.remove('d-none');
+            document.getElementById('VictoryTxt').classList.remove('d-none');
             if (flawlessVictory) {
                 document.getElementById('flawlessVictoryText').classList.remove('d-none');
                 document.getElementById('flawvicsnd').play();
@@ -173,7 +206,7 @@ function endGame(won) {
     } else {
         losses++;
         setTimeout(() => {
-            document.getElementById('lossText').classList.remove('d-none');
+            document.getElementById('LossTxt').classList.remove('d-none');
             document.getElementById('loseSound').play();
         }, 100);
         setTimeout(() => {
@@ -199,18 +232,21 @@ function restartGame() {
     selectedWord = '';
     displayedWord = '';
     slots = [];
+    hintsUsed = 0;
     flawlessVictory = true;
 
     document.getElementById('lives').textContent = `Lives: ${lives}`;
     document.getElementById('wrongLetters').textContent = 'Wrong Guesses:';
-    document.getElementById('victoryText').classList.add('d-none');
+    document.getElementById('VictoryTxt').classList.add('d-none');
     document.getElementById('flawlessVictoryText').classList.add('d-none');
-    document.getElementById('lossText').classList.add('d-none');
+    document.getElementById('LossTxt').classList.add('d-none');
     document.getElementById('revealedWord').classList.add('d-none');
     document.getElementById('victoryReveal').classList.add('d-none');
     document.getElementById('wordDisplay').textContent = '';
     document.getElementById('letterInput').value = '';
     document.getElementById('guessBtn').disabled = false;
+    document.getElementById('hintBtn').disabled = false;
+    document.getElementById('giveUpBtn').disabled = false;
     updateHealthDisplay();
 }
 

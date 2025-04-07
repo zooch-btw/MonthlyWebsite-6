@@ -9,80 +9,72 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main class="container-fluid text-center">
-        <div class="row justify-content-center">
-            <h1 class="col-md-4 col-sm-2" id="winsDisplay">Wins: 0</h1>
-            <div class="col-md-4 col-sm-8"></div>
-            <h1 class="col-md-4 col-sm-2" id="lossesDisplay">Losses: 0</h1>
+    <main class="container d-flex flex-column align-items-center min-vh-100 py-4">
+        <div class="row justify-content-center w-100 mb-4">
+            <h1 class="col-md-4 col-sm-6 text-start" id="winsDisplay">Wins: 0</h1>
+            <div class="col-md-4 col-sm-0"></div>
+            <h1 class="col-md-4 col-sm-6 text-end" id="lossesDisplay">Losses: 0</h1>
         </div>
         <h1 class="mb-4">🧪 <u>Periodic Table Hangman</u> 🧪</h1>
-        <div id="lives" class="m-1 p-1">Lives: 6</div>
+        <div id="lives" class="mb-3">Lives: 6</div>
 
-        <div id="customWordSection" class="mb-4">
+        <div id="customWordSection" class="mb-4 text-center">
             <h3>✍️ <u><b><i>Enter Custom Word (Optional):</i></b></u> ✍️</h3>
-            <input type="text" id="customWordInput" class="form-control d-inline-block w-25 text-center"
+            <input type="text" id="customWordInput" class="form-control d-inline-block w-50 mx-auto text-center mb-2"
                 placeholder="Type a word">
-            <button class="btn btn-primary mt-2" onclick="startCustomGame()">Start Custom Game</button>
-            <p class="text-muted mt-2">Or select difficulty:</p>
+            <button class="btn btn-primary" onclick="startCustomGame()">Start Custom Game</button>
+            <p class="text-muted mt-2 difficulty-prompt">Or select difficulty:</p> <!-- Added class here -->
         </div>
 
-        <div id="difficultySelection">
+        <div id="difficultySelection" class="mb-4">
             <h3>☢️ <u><b><i>Select Difficulty:</i></b></u> ☢️</h3>
-            <button class="btn btn-success difficulty-btn" onclick="startGame('easy')">Easy</button>
-            <button class="btn btn-warning difficulty-btn" onclick="startGame('medium')">Medium</button>
-            <button class="btn btn-danger difficulty-btn" onclick="startGame('hard')">Hard</button>
+            <div class="d-flex justify-content-center gap-3">
+                <button class="btn btn-success difficulty-btn" onclick="startGame('easy')">Easy</button>
+                <button class="btn btn-warning difficulty-btn" onclick="startGame('medium')">Medium</button>
+                <button class="btn btn-danger difficulty-btn" onclick="startGame('hard')">Hard</button>
+            </div>
         </div>
 
-        <div id="difficultyBox" class="mt-3 p-3 fw-bold d-none w-60"></div>
+        <div id="difficultyBox" class="mt-3 p-3 fw-bold d-none w-50 text-center"></div>
 
-        <div id="gameArea" class="mt-4 d-none">
-            <h2 id="wordDisplay" class="mb-3"></h2>
-            <div class="mb-3">
-                <input type="text" id="letterInput" maxlength="1" class="form-control d-inline-block w-auto text-center"
+        <div id="gameArea" class="mt-4 d-none w-75">
+            <h2 id="wordDisplay" class="mb-4"></h2>
+            <div class="mb-4 d-flex justify-content-center gap-2">
+                <input type="text" id="letterInput" maxlength="1" class="form-control w-25 text-center"
                     placeholder="Enter a letter">
                 <button id="guessBtn" class="btn btn-warning" onclick="guessLetter()">Guess</button>
                 <button id="hintBtn" class="btn btn-info" onclick="getHint()">Hint</button>
                 <button id="giveUpBtn" class="btn btn-secondary" onclick="giveUp()">Give Up</button>
             </div>
-            <p id="wrongLetters" class="fw-bold text-danger">Wrong Guesses:</p>
-            <div class="row justify-content-center mt-4">
-                <div class="col-8 health-container">
-                    <img id="healthImage1" class="health-part d-none imgs" src="pic1.png" alt="Health Part 1">
-                    <img id="healthImage2" class="health-part d-none imgs" src="pic2.png" alt="Health Part 2">
-                    <img id="healthImage3" class="health-part d-none imgs" src="pic3.png" alt="Health Part 3">
-                    <img id="healthImage4" class="health-part d-none imgs" src="pic4.png" alt="Health Part 4">
-                    <img id="healthImage5" class="health-part d-none imgs" src="pic5.png" alt="Health Part 5">
-                    <img id="healthImage6" class="health-part d-none imgs" src="pic6.png" alt="Health Part 6">
-                </div>
+            <p id="wrongLetters" class="fw-bold text-danger mb-4">Wrong Guesses:</p>
+            <div class="health-container mb-4">
+                <img id="healthImage1" class="health-part d-none" src="pic1.png" alt="Health Part 1">
+                <img id="healthImage2" class="health-part d-none" src="pic2.png" alt="Health Part 2">
+                <img id="healthImage3" class="health-part d-none" src="pic3.png" alt="Health Part 3">
+                <img id="healthImage4" class="health-part d-none" src="pic4.png" alt="Health Part 4">
+                <img id="healthImage5" class="health-part d-none" src="pic5.png" alt="Health Part 5">
+                <img id="healthImage6" class="health-part d-none" src="pic6.png" alt="Health Part 6">
             </div>
-            <button id="restartBtn" class="btn btn-danger mt-4" onclick="restartGame()">🔃 Restart Game 🔃</button>
+            <button id="restartBtn" class="btn btn-danger" onclick="restartGame()">🔃 Restart Game 🔃</button>
         </div>
 
-        <div class="d-flex justify-content-center p-3 m-3">
-            <div id="VictoryTxt" class="d-none">
-                <h1>You Win!</h1>
-            </div>
-            <div id="flawlessVictoryText" class="d-none p-1">
-                <h2>Flawless Victory!</h2>
-            </div>
-            <div id="LossTxt" class="d-none">
-                <h1>You Lose!</h1>
-            </div>
+        <div class="text-center mb-4">
+            <div id="VictoryTxt" class="d-none"><h1>You Win!</h1></div>
+            <div id="flawlessVictoryText" class="d-none"><h2>Flawless Victory!</h2></div>
+            <div id="LossTxt" class="d-none"><h1>You Lose!</h1></div>
         </div>
 
-        <div id="revealedWord" class="mt-3 d-none">
+        <div id="revealedWord" class="mt-3 d-none w-50 text-center">
             <h2 class="reveal-text">Element Exposed: <span id="lostWord"></span></h2>
         </div>
 
-        <div id="victoryReveal" class="mt-3 d-none">
+        <div id="victoryReveal" class="mt-3 d-none w-50 text-center">
             <h2 class="victory-text">Element Discovered: <span id="wonWord"></span></h2>
         </div>
 
-        <div class="container mt-4">
-            <div id="wordGraveyard" class="card">
-                <h3>⚰️ Word Graveyard ⚰️</h3>
-                <ul id="graveyardList" class="list-group"></ul>
-            </div>
+        <div id="wordGraveyard" class="card mt-4 w-50">
+            <h3 class="card-header">⚰️ Word Graveyard ⚰️</h3>
+            <ul id="graveyardList" class="list-group list-group-flush"></ul>
         </div>
     </main>
 

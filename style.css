@@ -1,81 +1,108 @@
 body {
     background: linear-gradient(to left, #e66465, #9198e5);
-    color: #2C2F59; /* Dark indigo */
+    color: #2C2F59;
     min-height: 100vh;
-    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 .easy {
     background-color: rgba(41, 233, 41, 0.85);
     border: 2px solid #2C2F59;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
 }
 
 .medium {
     background-color: rgba(231, 231, 22, 0.85);
     border: 2px solid #2C2F59;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
 }
 
 .hard {
     background-color: rgba(235, 23, 23, 0.85);
     border: 2px solid #2C2F59;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
 }
 
 .custom {
     background-color: rgba(147, 112, 219, 0.85);
     border: 2px solid #2C2F59;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
 }
 
 .health-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 600px; /* Adjust based on total image width */
-    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid #2C2F59;
+    border-radius: 8px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .health-part {
-    width: 16.66%; /* 100% / 6 parts */
+    width: 16.66%;
     height: auto;
     margin: 0;
-    padding: 0;
-    border: none; /* No individual borders */
-}
-
-#difficultyBox {
-    width: 50vw;
-    margin-left: auto;
-    margin-right: auto;
-}
-.health-container.full-image {
-    border: 2px solid #2C2F59; /* Border around full image */
 }
 
 #lives {
     font-size: 1.5rem;
     font-weight: bold;
     color: aqua;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px 16px;
+    border-radius: 8px;
+    display: inline-block;
 }
 
 #wordGraveyard {
     background: rgba(255, 255, 255, 0.1);
     border: 2px solid #2C2F59;
-    max-width: 500px;
-    margin: 0 auto 20px;
+    border-radius: 8px;
+    text-align: center;
     padding: 15px;
+}
+
+#wordGraveyard .card-header {
+    text-align: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid #2C2F59;
 }
 
 #graveyardList {
     list-style: none;
     padding: 0;
+    margin: 0;
+    text-align: center;
 }
 
 .graveyard-word {
-    padding: 5px 10px;
-    margin: 5px 0;
+    padding: 8px 15px;
+    margin: 5px auto;
     border-radius: 5px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    max-width: 80%;
+    text-align: center;
 }
 
 .won-word {
@@ -91,8 +118,9 @@ body {
 #VictoryTxt h1 {
     font-size: 3rem;
     color: #284aa7;
-    text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
+    text-shadow: 0 0 10px #28a745, 0 0 20px #28a745;
     animation: glow 1.5s ease-in-out infinite alternate;
+    margin: 0;
 }
 
 #flawlessVictoryText h2 {
@@ -100,54 +128,48 @@ body {
     color: #FFD700;
     text-shadow: 0 0 10px #FFD700;
     animation: glow 1.5s ease-in-out infinite alternate;
+    margin: 0;
 }
 
 #LossTxt h1 {
     font-size: 3rem;
     color: orange;
-    text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
+    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
     animation: glow 1.5s ease-in-out infinite alternate;
+    margin: 0;
 }
 
 @keyframes glow {
-    0% {
-        text-shadow: 0 0 10px #28a745, 0 0 20px #28a745, 0 0 30px #28a745, 0 0 40px #28a745;
-    }
-    100% {
-        text-shadow: 0 0 20px #00ff00, 0 0 30px #00ff00, 0 0 40px #00ff00, 0 0 50px #00ff00;
-    }
-}
-
-#hintBtn, #giveUpBtn {
-    margin-left: 10px;
-}
-
-#revealedWord, #victoryReveal {
-    max-width: 500px;
-    margin: 0 auto 20px;
-    padding: 15px;
-    border-radius: 10px;
-    transition: opacity 0.5s ease-in-out;
+    0% { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor; }
+    100% { text-shadow: 0 0 20px currentColor, 0 0 30px currentColor; }
 }
 
 #revealedWord {
     background: rgba(255, 0, 0, 0.1);
     border: 2px solid #ff0000;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
 }
 
 .reveal-text {
     color: #ff4444;
     text-shadow: 0 0 5px #ff0000;
+    margin: 0;
 }
 
 #victoryReveal {
     background: rgba(11, 218, 59, 0.1);
     border: 2px solid #28a745;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
 }
 
 .victory-text {
     color: #17a338;
     text-shadow: 0 0 5px #28a745;
+    margin: 0;
 }
 
 #lostWord, #wonWord {
@@ -155,9 +177,44 @@ body {
     font-style: italic;
 }
 
-.d-none { display: none !important; }
+.d-none { 
+    display: none !important; 
+}
 
-.imgs {
-    height: 30%;
-    width: 10%;
+.btn {
+    margin: 5px;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+input.form-control {
+    max-width: 300px;
+    margin: 0 auto 10px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+h1, h2, h3 {
+    margin: 0 auto 15px;
+}
+
+#difficultySelection, #customWordSection {
+    text-align: center;
+}
+
+.difficulty-btn {
+    min-width: 100px;
+}
+
+/* New styling for "Or select difficulty:" */
+.difficulty-prompt {
+    font-size: 1.2rem;
+    font-style: italic;
+    color: #ffffff; /* White for contrast against gradient */
+    background: rgba(44, 47, 89, 0.3); /* Subtle background matching #2C2F59 */
+    padding: 5px 15px;
+    border-radius: 5px;
+    display: inline-block; /* Keeps it centered and compact */
+    margin-top: 10px;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* Subtle glow */
 }
